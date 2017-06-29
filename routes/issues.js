@@ -26,7 +26,7 @@ function countIssues() {
 
 function getIssuelinksRelatedOrBlock(issue) {
   return issue.fields.issuelinks.filter(link => {
-    return link.type.name === 'Related' || link.type.name === 'Block';
+    return link.type.name.includes('Relate') || link.type.name.includes('Block');
   });
 }
 
@@ -62,7 +62,7 @@ router.post('/', function (req, res, next) {
       const searchObject = {
         issuetype: req.body.issuetype,
       };
-      
+
       jira.search.search({ jql: `project=${constants.project} and issuetype in (${searchObject.issuetype})`, maxResults, fields: constants.fields },
         function (error, resp) {
           if (error) {
